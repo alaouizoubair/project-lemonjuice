@@ -11,7 +11,7 @@ cascadePath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath)
 
 # For face recognition we will the the LBPH Face Recognizer 
-recognizer = cv2.face.createLBPHFaceRecognizer()
+recognizer = cv2.createLBPHFaceRecognizer()
 
 def get_images_and_labels(path):
     # Append all the absolute image paths in a list image_paths

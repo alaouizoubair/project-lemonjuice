@@ -10,21 +10,11 @@ except ImportError:
 
 import os, sys
 
-#######################
-#Phase one: Resize all images on target folder
-#######################
 
-cwd = os.getcwd()+'/images/'
-for imgName in os.listdir(cwd):
-	img = Image.open(cwd+imgName)
-	img = img.resize((1000,1000),Image.ANTIALIAS);
-	img.save(cwd+imgName);
-
-print("Redimensionnement terminé")
-
-#######################
-#End of phase one
-#######################
+try:
+ 	subjectPath = sys.argv[2]
+except IndexError:
+ 	print("No image folder was given to search in second second arguement")
 
 try:
 	imagePath = sys.argv[1]
@@ -32,18 +22,19 @@ except IndexError:
 	print("No image path was added in the arguments")
 
 
-i1 = Image.open(imagePath)
-bestfitpercent = 0
+cwd = os.getcwd()+'/photos/'+subjectPath+'/'
+
+i1 = Image.open(imagePath) #Open image to search for
+bestfitpercent = 0 
 bestfitpath= ""
-for imgName in os.listdir(cwd):
+for imgName in os.listdir(cwd): #Loop through faces in images directory
 	i2 = Image.open(cwd+imgName)
-	assert i1.mode == i2.mode, i1.mode+" "+i2.mode+"Different kinds of images."
+	#assert i1.mode == i2.mode, i1.mode+" "+i2.mode+"Different kinds of images." # Make sure the two photos have the same type
 
-	assert i1.size == i2.size, "Different sizes."
+	assert i1.size == i2.size, "Different sizes." # Make sure the two photos have the same size
 	 
-
-
-	pairs = zip(i1.getdata(), i2.getdata())
+	#Alortithm to find the difference between the photo in param and the photos in the list
+	pairs = zip(i1.getdata(), i2.getdata()) 
 	if len(i1.getbands()) == 1:
 	    dif = sum(abs(p1-p2) for p1,p2 in pairs)
 	else:
@@ -51,10 +42,10 @@ for imgName in os.listdir(cwd):
 	 
 	ncomponents = i1.size[0] * i1.size[1] * 3
 	percent = (((dif / 255.0 * 100) / ncomponents)-100)*(-1)
-	print("Difference (percentage):", percent)
 
 	if(percent >= bestfitpercent):
 		bestfitpercent = percent
 		bestfitpath = cwd+imgName
 
-print("The best fit is: <<"+bestfitpath+">> with a resemblance probability of: "+str(bestfitpercent)+"%")
+
+print(bestfitpercent)

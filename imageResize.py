@@ -5,11 +5,13 @@ except ImportError:
 
 import os
 
-cwd = os.getcwd()+'/images/'
-print(cwd)
-for imgName in os.listdir(cwd):
-	img = Image.open(cwd+imgName)
-	img = img.resize((1000,1000),Image.ANTIALIAS);
-	img.save(cwd+imgName);
-	print(imgName + "a été redimensioné")
+photos = os.getcwd()+'/photos/'
+print(photos)
+for subject in os.listdir(photos):
+	cwd = photos+subject+'/'
+	for imgName in os.listdir(cwd):
+		img = Image.open(cwd+imgName)
+		img = img.resize((1000,1000),Image.ANTIALIAS);
+		img.save(cwd+imgName+'.gif','gif');
+		print(imgName + "a été redimensioné")
 
