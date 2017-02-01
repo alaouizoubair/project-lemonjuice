@@ -3,6 +3,7 @@
 #include <time.h>
 #include <python3.5/Python.h>
 #include <string.h>
+#include <time.h>
 
 int main(int argc, char**argv){
 
@@ -11,6 +12,9 @@ int main(int argc, char**argv){
 	char number[5];
 	char cmd[1024];
 	int cpt=0,i,j,m;
+	time_t start_t, end_t;
+   	double diff_t;
+
 
 	fp = popen("ls photos/ | tr \"\n\" \" \"", "r");
 	if (fp == NULL) {
@@ -42,6 +46,11 @@ int main(int argc, char**argv){
 
 	
 	//popen("mpicc imageComp.c -o imageComp", "r");
+
+	time(&start_t);	
+	fp = popen(cmd, "r");
+	
+
 	fp = popen(cmd, "r");
 	if (fp == NULL) {
 		printf("Failed to run command\n" );
@@ -51,6 +60,11 @@ int main(int argc, char**argv){
 	while (fgets(result, sizeof(result)-1, fp) != NULL) {
 		printf("%s", result);
 	}
+
+	time(&end_t);
+	diff_t = difftime(end_t, start_t);
+	printf("=>Temps d'exécution (Algo Séquentiel): %.2f secondes\n/******************************************/\n",diff_t);
+
 	
 
 	return 0;

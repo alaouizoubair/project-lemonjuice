@@ -11,9 +11,10 @@ int main(int argc,char** argv){
 	char path[1035];
 	int rank,size,i,d=0;
 	double maxglob=-1,max; 
-	time_t t;
+	
 
 	// Command to launch the python script
+
 
 	for(i=0;i<argc-2;i++){
 	
@@ -39,7 +40,7 @@ int main(int argc,char** argv){
 	}
 
 	
-	printf("valeur max: %f from subject%2d\n",maxglob,d+1);
+	printf("/******************************************/\n=>Programme tourné en séquentiel\n=>Nombre de processus utilisés: 1\n=>Pourcentage de ressemblance: %.2f % \n=>Source: subject%d\n",maxglob,d+1);
 	
 
 
